@@ -1,0 +1,58 @@
+#title1{
+    font-size: 2.5em;
+}
+
+.arrow{
+    font-size: 2.5em;
+}
+.background-image{
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.background-text{
+    padding: auto;
+    border-radius: 8px;
+    background-color: rgba(253, 253, 253, 0.685);
+}
+.text-center{
+    margin-bottom: 40%;
+}
+.content-1{
+    height: 80vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.content-2{
+    height: 40vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.border-comment{
+    border-style: none none none solid;
+    border-color: gray;
+}
+.text-opinion{
+    font-size: x-large;
+}
+.opinion-left{
+    transform: translate(-25%,0);
+}
+.opinion-right{
+    transform: translate(25%,0);
+}
+.background-opinions{
+    background-image: url('../images/opinions.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.contact-title{
+    height: 15%;
+}
+.footer-div{
+    height: 20vh;
+}
