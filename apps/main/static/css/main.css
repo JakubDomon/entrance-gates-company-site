@@ -44,6 +44,12 @@
 .opinion-right{
     transform: translate(25%,0);
 }
+.opinions-text{
+    transition: 200ms;
+}
+.opinions-text:hover{
+    transform: scale(1.2);
+}
 .background-opinions{
     background-image: url('../images/opinions.png');
     background-repeat: no-repeat;
@@ -55,4 +61,33 @@
 }
 .footer-div{
     height: 20vh;
+}
+.visible{
+    display: block;
+    visibility: visible;
+}
+.hidden{
+    display: none;
+    visibility: hidden;
+}
+.opinions-form-user{
+    visibility: hidden;
+}
+.js-opinion{
+    width: 75%;
+}
+.border-opinion{
+    width: 70%;
+    height: 25%;
+    background-color: rgb(230, 230, 230);
+    border: 5px solid rgb(173, 173, 173);
+    border-radius: 25%;
+
+    animation: fadeIn 800ms ease-in-out;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+}
+@keyframes fadeOut {
+    from {opacity: 1;}
 }

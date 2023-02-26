@@ -30,9 +30,8 @@ button.addEventListener('click', function(){
 
     var csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    var csrf = 
     // Send POST request to API
-    fetch('/save', {
+    fetch('/save/contact', {
         method: 'POST',
         headers:{
             'Content-Type': 'application/json',
