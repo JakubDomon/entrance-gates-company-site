@@ -74,3 +74,23 @@ def opinionFormPost(request):
         return JsonResponse(response, safe=False)
 
     return redirect('/')
+
+def opinionsGet(request):
+    if request.method == 'GET':
+        try:
+            all_records = CompanyOpinions.objects.values()
+            print(all_records)
+        except Exception as Err:
+            response = {
+                'message': 'Nie udało się pobrać opinii z bazy danych',
+                'status': 'error',
+                'error': str(Err), 
+            }
+            return JsonResponse(response, safe= False)
+        
+        response = {
+            'status': 'success',
+            'data': list(all_records),
+        }
+
+        return JsonResponse(response, safe= False)

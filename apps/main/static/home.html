@@ -9,12 +9,22 @@
 <script src="{% static 'js/contact.js' %}"></script>
 <script src="{% static 'js/opinions.js' %}"></script>
 <script src="{% static 'js/products.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
 {% endblock js %}
 
 {% block content %}
 <!-- FIRST ROW WITH BACKGROUND IMAGE -->
 <div class="row h-80 content-1 background-image w-100">
-  
+  <div class="arrow-div d-flex justify-content-center align-items-center flex-column">
+    <a href="#" class="d-flex align-items-center justify-content-center flex-column btn-arrow-js">
+      <div class="round d-flex justify-content-center align-items-center">
+        <i class="fa-solid fa-arrow-right arrow-icon"></i>
+      </div>
+      <div class="text-div-arrow mt-3 d-flex align-items-center justify-content-center w-100">
+        <p>Przewiń na dół</p>
+      </div>
+    </a>
+  </div>
 </div>
 
 <!-- ------------------------------- -->
@@ -22,7 +32,7 @@
 <!-- SLIDER ROW -->
 
 <div class="row h-80 content-1 w-100">
-    <div class="col-md-4 h-100 d-flex align-items-center justify-content-center">
+    <div class="col-md-4 h-100 d-flex align-items-center justify-content-center new-products">
         <div class="text-center w-75 d-flex flex-column mt-4">
             <b><h2 class='text-start' id="title1">Najnowsze produkty</h2></b>
             <h5 class="text-end" id="title2">Sprawdź naszą ofertę!</h5>
@@ -177,7 +187,7 @@
 <!-- ------------------------------- -->
 <hr class="mx-auto mt-4 mb-4 w-75">
 <!-- ROW WITH CONTACT -->
-<div class="row w-100 content-1">
+<div class="row w-100 content-1 contact-section">
   <div class="row contact-title d-flex justify-content-center align-items-center">
     <div class="text-row-contact h-25 w-100">
       <h2 class="text-center">Skontaktuj się z nami!<hr class="w-25 mx-auto"></h2>
