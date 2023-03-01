@@ -1,6 +1,6 @@
 // Loading opinions from database
 // DO UZUPEŁNIENIA !!!
-
+var csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
 // Opinion form 
 const opinionBtn = document.querySelector('.opinion-button');
 const opinionsForm = document.querySelector('.opinions-form');
@@ -36,8 +36,6 @@ opinionSubmitButton.addEventListener('click', function(){
         'opinion-text': opinionText.value,
     }
 
-    var csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
     // Send POST request to API
     fetch('save/opinions/', {
         method: 'POST',
@@ -58,6 +56,26 @@ opinionSubmitButton.addEventListener('click', function(){
             }
         })
 })
+
+var opinions = get_opinions(opinions);
+
+function get_opinions(opinions){
+    opinions = fetch('get/opinions/', {
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json',
+            "X-CSRFToken": csrf,
+        },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        setInterval(() => {
+            console.log(data);
+        }, 5000)
+        return data;
+    })
+}
 
 function make_visible(element){
     element.style.visibility = 'visible';
