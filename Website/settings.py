@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
+    'crispy_bootstrap5',
+
     'apps.main',
+    'apps.authorize',
+    'apps.client_panel',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +137,8 @@ STATIC_ROOT = BASE_DIR /'static_root'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'templates/base/static'),
     os.path.join(BASE_DIR, 'apps/main'),
+    os.path.join(BASE_DIR, 'apps/authorize'),
+    os.path.join(BASE_DIR, 'apps/client_panel')
 ]
 
 # Default primary key field type
@@ -139,5 +146,8 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/home'
-LOGOUT_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

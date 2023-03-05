@@ -20,5 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Include Apps
-    path('', include('apps.main.urls'))
+    path('', include('apps.main.urls')),
+    path('', include('apps.authorize.urls')),
+    path('', include('apps.client_panel.urls')),
 ]
