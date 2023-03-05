@@ -7,6 +7,9 @@ html, body{
     margin: 0;
     padding: 0;
 }
+.asteriskField {
+    display: none;
+}
 
 a, a:hover, a:focus, a:active , .btn-link{
     text-decoration: none;
@@ -125,3 +128,16 @@ body{
     z-index: 1;
 }
 .button-dropdown-login:hover .disp{display: block;}
+
+/* UNIVERSAL CLASSES */
+.center-all-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center-all-column{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

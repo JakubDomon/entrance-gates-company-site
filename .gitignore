@@ -1,6 +1,10 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+<<<<<<< HEAD
+=======
+*.pyc
+>>>>>>> Login
 
 # C extensions
 *.so

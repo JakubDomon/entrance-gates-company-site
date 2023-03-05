@@ -1,5 +1,7 @@
 {% load static %}
 {% csrf_token %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +23,7 @@
         {% block menu %}
         {% endblock %}
     </div>
-    <div class="content">
+    <div class="content d-flex justify-content-center align-items-center flex-column">
         {% block content %}
         {% endblock %}
     </div>   

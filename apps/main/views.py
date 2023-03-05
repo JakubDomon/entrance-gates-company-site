@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from apps.main.models import MainContactForm, MainCategory, Subcategory, Product, Opinions, CompanyOpinions
+from apps.authorize.forms import LoginForm
 import json
 
 # Create your views here.
 def home(request):
     # Getting products
-    return render(request, 'main/static/home.html', {})
+    loginForm = LoginForm()
+    
+    return render(request, 'main/static/home.html', {'loginForm': loginForm})
 
 # VIEW TO SAVE CONTACT MESSAGE TO DATABASE
 def contactFormPost(request):
