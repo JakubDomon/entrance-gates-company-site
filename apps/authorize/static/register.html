@@ -5,14 +5,23 @@
 {% load crispy_forms_tags %}
 
 {% block css %}
+<!-- Django variables-->
+<script data-action="{{ action }}">
+    const data = document.currentScript.dataset;
+</script>
+<!-- Index -->
 <link rel="stylesheet" href="{% static 'css/main_auth.css' %}">
 {% endblock css %}
+
+{% block js %}
+<script src="{% static 'js/index_auth.js' %}"></script>
+{% endblock js %}
 
 {% block content %}
 <div class="dashboard d-flex justify-content-around align-items-center">
     <div class="col-md-5 center-all-column">
         <h4 class="mb-4">Zarejestruj się</h4>
-        <form action="" class="mt-4 mb-4 d-flex justify-content-start align-items-center flex-column w-75">
+        <form action="/auth/register/" method="post" id="register-form" class="mt-4 mb-4 d-flex justify-content-start align-items-center flex-column w-75">
             {% csrf_token %}
             <div class="w-75">
                 {% crispy registerForm %}
@@ -20,8 +29,18 @@
         </form>
         <div class="w-75 d-flex align-items-center justify-content-around">
             <button type="button" class="btn btn-link">Wyczyść formularz</button>
-            <button type="submit" class="btn btn-outline-secondary">Utwórz użytkownika</button>
+            <button type="submit" form="register-form" class="btn btn-outline-secondary">Utwórz użytkownika</button>
         </div>
+        {% if messages %}
+        <div class="w-75 mt-4 d-flex justify-content-center align-items-center">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                <p>{{ message }}</p>
+                <p>Za <span id="seconds"></span> sekund zostaniesz przekierowany do strony głównej</p>
+              </div>
+            {% endfor %}
+        </div>
+        {% endif %}
     </div>
     <div class="col-md-5 center-all-column h-75">
         abcd
