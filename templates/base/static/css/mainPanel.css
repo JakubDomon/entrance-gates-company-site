@@ -1,0 +1,22 @@
+/* ---------------------------------- */
+/* --------Basic config-------------- */
+/* ---------------------------------- */
+html, body{
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.asteriskField {
+    display: none;
+}
+
+a, a:hover, a:focus, a:active , .btn-link{
+    text-decoration: none;
+    color: inherit;
+}
+
+body{
+    background: rgb(204, 204, 204);
+    background: linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(235, 235, 235) 35%, rgb(255, 255, 255) 100%);
+}

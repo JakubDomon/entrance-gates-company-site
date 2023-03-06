@@ -5,4 +5,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def client_panel(request):
-    return render(request, 'client_panel/static/client_panel.html')
+    user = request.user
+
+    return render(request, 'client_panel/static/client_panel.html', {'user': user})
