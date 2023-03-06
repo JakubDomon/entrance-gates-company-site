@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from apps.authorize.forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -21,13 +21,13 @@ def login_user(request):
             # Login User
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Pomyślnie zalogowano')
+                messages.success(request, 'Pomyślnie zalogowano użytkownika ' + user.get_username())
                 return render(request, 'main/static/home.html', {'loginForm': loginForm})
 
             return render(request, 'main/static/home.html', {'loginForm': loginForm})
     else:
         loginForm = LoginForm()
-    return render(request, 'main/static/home.html', {'loginForm': loginForm})
+        return render(request, 'main/static/home.html', {'loginForm': loginForm})
 
 def register(request):
     if request.method == 'POST':
@@ -49,3 +49,12 @@ def register(request):
     else:
         registerForm = RegisterForm()
         return render(request, 'authorize/static/register.html', {'registerForm': registerForm, 'action': 'none'})
+
+def logout_user(request):
+    user = request.user.username
+    logout(request)
+
+    messages.success(request, 'Pomyślnie wylogowano użytkownika ' + user)
+    
+    loginForm = LoginForm()
+    return render(request, 'main/static/home.html', {'loginForm': loginForm})

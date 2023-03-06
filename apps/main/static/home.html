@@ -19,7 +19,12 @@
       <li class="menu-item"><a href="#"><i class="fa-solid fa-users"></i> &nbsp; O NAS</a></li>
       <li class="menu-item"><a href="#"><i class="fa-solid fa-dollar-sign"></i> &nbsp; WYCENA</a></li>
       <li class="menu-item scroll-btn"><a href="#"><i class="fa-solid fa-phone"></i> &nbsp; KONTAKT</a></li>
+      {% if user.is_authenticated %}
+      <li class="menu-item"><a href="/client/panel"><i class="fa-solid fa-table-columns"></i> &nbsp; PANEL KLIENTA</a>
+      <li class="menu-item"><a href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i> &nbsp; WYLOGUJ</a>
+      {% else %}
       <li class="menu-item button-dropdown-login"><a href="#"><i class="fa-solid fa-table-columns"></i> &nbsp; PANEL KLIENTA</a>
+      {% endif %}
           <ul class="disp mb-4">
               <div class="login-page d-flex align-items-center justify-content-center flex-column mt-4">
                   <div class="titleLogin mb-1 mt-4"><h5>Zaloguj się</h5></div>
@@ -38,15 +43,6 @@
                           <button type="button" onclick="window.location='/auth/register'" class="btn btn-link">Zarejestruj się</button>
                           <button type="submit" class="btn btn-outline-secondary">Zaloguj się</button>
                       </div>
-                      {% if messages %}
-                      <div class="w-75 mt-4 d-flex justify-content-center align-items-center">
-                          {% for message in messages %}
-                          <div class="alert {{ message.tags }}" role="alert">
-                            <p>{{ message }}</p>
-                          </div>
-                          {% endfor %}
-                      </div>
-                      {% endif %}
                   </form>
               </div>
           </ul>
@@ -58,6 +54,17 @@
 {% block content %}
 <!-- FIRST ROW WITH BACKGROUND IMAGE -->
 <div class="row h-80 content-1 background-image w-100">
+  {% if messages %}
+  <div class="position-absolute top-0 w-100 d-flex justify-content-center align-items-center message-div fadeIn">
+    <div class="w-50 mt-4 d-flex justify-content-center align-items-center">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}" role="alert">
+          <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+  {% endif %}
   <div class="arrow-div d-flex justify-content-center align-items-center flex-column">
     <a href="#" class="d-flex align-items-center justify-content-center flex-column btn-arrow-js">
       <div class="round d-flex justify-content-center align-items-center">
