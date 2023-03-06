@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from apps.authorize.forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 # Create your views here.
 
-def login(request):
+def login_user(request):
     if request.method == 'POST':
         # Form instance
         loginForm = LoginForm(request.POST)
@@ -20,9 +21,10 @@ def login(request):
             # Login User
             if user is not None:
                 login(request, user)
-                redirect('/')
+                messages.success(request, 'Pomyślnie zalogowano')
+                return render(request, 'main/static/home.html', {'loginForm': loginForm})
 
-            redirect('/')
+            return render(request, 'main/static/home.html', {'loginForm': loginForm})
     else:
         loginForm = LoginForm()
     return render(request, 'main/static/home.html', {'loginForm': loginForm})
@@ -38,14 +40,12 @@ def register(request):
 
             user = User.objects.create_user(name, email, password)
 
-            return render(request, 'auth/static/successCreateUser.html')
-        else:
-            attr = {
-                'registerForm': registerForm,
-                'message': 'Nieprawidłowe dane',
-            }
+            messages.success(request, 'Pomyślnie dodano użytkownika!')
 
-            return render(request, 'auth/static/register.html', {attr})
+            return render(request, 'authorize/static/register.html', {'registerForm': registerForm, 'action': 'redirect'})
+        else:
+            messages.error(request, 'Nie udało się dodać użytkownika!')
+            return render(request, 'authorize/static/register.html', {'registerForm': registerForm, 'action': 'redirect'})
     else:
         registerForm = RegisterForm()
-        return render(request, 'authorize/static/register.html', {'registerForm': registerForm})
+        return render(request, 'authorize/static/register.html', {'registerForm': registerForm, 'action': 'none'})
