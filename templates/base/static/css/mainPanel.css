@@ -16,6 +16,12 @@ a, a:hover, a:focus, a:active , .btn-link{
     color: inherit;
 }
 
+.h-95{
+    height: 95%;
+}
+.w-95{
+    width: 95%;
+}
 body{
     background: rgb(204, 204, 204);
     background: linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(235, 235, 235) 35%, rgb(255, 255, 255) 100%);

@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('apps.main.urls')),
     path('', include('apps.authorize.urls')),
     path('', include('apps.client_panel.urls')),
+    path('', include('apps.admin_panel.urls')),
 ]
