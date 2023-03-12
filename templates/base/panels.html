@@ -16,10 +16,35 @@
 </head>
 <body>
     <div class="w-100">
-        {% block content %}{% endblock %}
+        <div class="row w-100 h-100">
+            <div class="col-md-2 d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <a href="/"><h5>JANUSZEX</h5></a>
+                </div>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto h-100">
+                    {% block menu-links %}
+                    {% endblock %}
+                </ul>
+                <hr>
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="dropdownButton" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ user.logo }}" class="rounded-circle me-3" alt="">&nbsp;<strong>{{ user.username }} &nbsp;</strong></a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                            {% block menu-user-links %}
+                            {% endblock %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 h-100">
+                {% block main-content %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
 
-    <script src="{% static 'js/indexBase.js' %}"></script>
+    <script src="{% static 'js/indexPanel.js' %}"></script>
     {% block js %}{% endblock js %}
     <!-- Fontawesome icons -->
     <script src="https://kit.fontawesome.com/a46e62d80c.js" crossorigin="anonymous"></script>

@@ -20,3 +20,12 @@ body{
     background: rgb(204, 204, 204);
     background: linear-gradient(90deg, rgb(204, 204, 204) 0%, rgb(235, 235, 235) 35%, rgb(255, 255, 255) 100%);
 }
+
+.nav-pills > li > a{
+ transition: 400ms;
+}
+
+.nav-pills > li > a:hover {
+    transform: scale(1.05) translate(3%, 0);
+    background-color: rgba(128, 128, 128, 0.158);
+}
