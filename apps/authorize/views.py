@@ -33,12 +33,14 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Pomyślnie zalogowano użytkownika ' + user.get_username())
-                return render(request, 'main/static/home.html', {'loginForm': loginForm})
+                # return render(request, 'main/static/home.html', {'loginForm': loginForm})
+                return redirect('/')
 
-            return render(request, 'main/static/home.html', {'loginForm': loginForm})
+            messages.error(request, 'Niepoprawne dane!')
+            # return render(request, 'main/static/home.html', {'loginForm': loginForm})
+            return redirect('/')
     else:
-        loginForm = LoginForm()
-        return render(request, 'main/static/home.html', {'loginForm': loginForm})
+        return redirect('/')
 
 def register(request):
     if request.method == 'POST':
@@ -68,9 +70,7 @@ def logout_user(request):
     logout(request)
 
     messages.success(request, 'Pomyślnie wylogowano użytkownika ' + user)
-    
-    loginForm = LoginForm()
-    return render(request, 'main/static/home.html', {'loginForm': loginForm})
+    return redirect('/')
 
 
 # Permission management

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load auth_templates %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -20,10 +21,14 @@
       <li class="menu-item"><a href="#"><i class="fa-solid fa-dollar-sign"></i> &nbsp; WYCENA</a></li>
       <li class="menu-item scroll-btn"><a href="#"><i class="fa-solid fa-phone"></i> &nbsp; KONTAKT</a></li>
       {% if user.is_authenticated %}
-      <li class="menu-item"><a href="/client/panel"><i class="fa-solid fa-table-columns"></i> &nbsp; PANEL KLIENTA</a>
-      <li class="menu-item"><a href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i> &nbsp; WYLOGUJ</a>
+        {% if request.user|has_group:"Staff" %}
+          <li class="menu-item"><a href="/staff/panel"><i class="fa-solid fa-table-columns"></i> &nbsp; PANEL</a>
+        {% else %}
+          <li class="menu-item"><a href="/client/panel"><i class="fa-solid fa-table-columns"></i> &nbsp; PANEL KLIENTA</a>
+        {% endif %}
+        <li class="menu-item"><a href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i> &nbsp; WYLOGUJ</a>
       {% else %}
-      <li class="menu-item button-dropdown-login"><a href="#"><i class="fa-solid fa-table-columns"></i> &nbsp; PANEL KLIENTA</a>
+      <li class="menu-item button-dropdown-login"><a href="#"><i class="fa-solid fa-table-columns"></i> &nbsp; ZALOGUJ SIĘ</a>
       {% endif %}
           <ul class="disp mb-4">
               <div class="login-page d-flex align-items-center justify-content-center flex-column mt-4">

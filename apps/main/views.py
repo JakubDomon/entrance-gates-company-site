@@ -4,7 +4,7 @@ from apps.main.models import MainContactForm, MainCategory, Subcategory, Product
 from apps.authorize.forms import LoginForm
 import json
 
-# Create your views here.
+# HOME VIEW
 def home(request):
     # Getting products
     loginForm = LoginForm()
@@ -47,6 +47,7 @@ def contactFormPost(request):
 
     return redirect('/')
 
+# VIEW TO SAVE OPINION
 def opinionFormPost(request):
     if request.method == 'POST':
         try:
@@ -78,6 +79,7 @@ def opinionFormPost(request):
 
     return redirect('/')
 
+# VIEW TO GET ALL OPINIONS
 def opinionsGet(request):
     if request.method == 'GET':
         try:
