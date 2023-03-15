@@ -1,16 +1,26 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from apps.main.models import MainContactForm, MainCategory, Subcategory, Product, Opinions, CompanyOpinions
+from apps.products.models import MainCategory, Product, Opinions
+from apps.main.models import CompanyOpinions, MainContactForm
 from apps.authorize.forms import LoginForm
+from django.views.generic import TemplateView, FormView
 import json
 
-# HOME VIEW
-def home(request):
-    # Getting products
-    loginForm = LoginForm()
+# # HOME VIEW
+# def home(request):
+#     # Getting products
+#     loginForm = LoginForm()
     
-    return render(request, 'main/static/home.html', {'loginForm': loginForm})
+#     return render(request, 'main/static/home.html', {'loginForm': loginForm})
 
+# HOME VIEW
+class HomeView(FormView):
+    model = Product
+    form_class = LoginForm
+    context_object_name = 'products'
+    template_name = 'main/static/home.html'
+    
+    
 # VIEW TO SAVE CONTACT MESSAGE TO DATABASE
 def contactFormPost(request):
     if request.method == 'POST':

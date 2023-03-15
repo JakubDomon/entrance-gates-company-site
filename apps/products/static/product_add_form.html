@@ -1,0 +1,14 @@
+{% load crispy_forms_tags %}
+
+<div class="w-100">
+    {{ form|crispy }}
+</div>
+{% if messages %}
+    <div class="w-100">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

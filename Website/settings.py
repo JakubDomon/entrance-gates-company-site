@@ -44,8 +44,8 @@ INSTALLED_APPS = [
 
     'apps.main',
     'apps.authorize',
-    'apps.client_panel',
-    'apps.admin_panel',
+    'apps.panel',
+    'apps.products',
 ]
 
 MIDDLEWARE = [
@@ -139,8 +139,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'templates/base/static'),
     os.path.join(BASE_DIR, 'apps/main'),
     os.path.join(BASE_DIR, 'apps/authorize'),
-    os.path.join(BASE_DIR, 'apps/client_panel'),
-    os.path.join(BASE_DIR, 'apps/admin_panel'),
+    os.path.join(BASE_DIR, 'apps/products'),
+    os.path.join(BASE_DIR, 'apps/panel'),
 ]
 
 # Default primary key field type
