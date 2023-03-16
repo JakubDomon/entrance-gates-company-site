@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import FormView, View, ListView
 from apps.products.models import Product, MainCategory
-from apps.products.forms import ProductAddForm
+from apps.products.forms import ProductForm
 
 # Create your views here.
 class ProductViewList(ListView):
@@ -11,7 +11,7 @@ class ProductViewList(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['productAddForm'] = ProductAddForm
-
+        context['productAddForm'] = ProductForm
+        context['productUpdateForm'] = ProductForm
         return context
     
