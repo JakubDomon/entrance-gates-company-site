@@ -1,0 +1,16 @@
+<!-- CRISPY FORMS -->
+{% load crispy_forms_tags %}
+<!-- CREATE PRODUCT FORM -->
+{% if messages %}
+<div class="w-100">
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}" role="alert">
+        <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% csrf_token %}
+<div class="w-100">
+    {{ form|crispy }} 
+</div>
