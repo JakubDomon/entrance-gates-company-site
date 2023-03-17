@@ -1,6 +1,6 @@
 // Event to reload page after form is successful
-document.body.addEventListener('successRefresh', (event) =>{
+document.body.addEventListener('refreshPage', (event) =>{
     setTimeout(() => {
         document.location.reload()
-    }, 2000)
+    }, 1200)
 })

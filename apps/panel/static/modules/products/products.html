@@ -9,13 +9,49 @@
 
 {% block js %}
 <script src="{% static 'modules/products/index_products.js' %}"></script>
+<!-- HTMX -->
+<script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+</script>
 {% endblock %}
 
 {% block main-content %}
 <div class="row  position-relative d-flex justify-content-center align-items-center g-2">
     <div><h4 class="text-center">Produkty w kategoriach</h4></div>
     <div>
-      <span class="position-absolute mt-2 d-inline-block top-0 end-0"><a href="/products/create/category/" class="btn btn-link"><i class="fa-solid fa-plus me-1"></i>Dodaj kategorię</a></span>
+      <!-- <span class="position-absolute mt-2 d-inline-block top-0 end-0"><a href="/products/create/category/" class="btn btn-link"><i class="fa-solid fa-plus me-1"></i>Dodaj kategorię</a></span> -->
+
+      <button class="position-absolute mt-2 d-inline-block top-0 end-0 btn btn-add" hx-get="/products/create/category" hx-target="category-add" data-bs-toggle="modal" data-bs-target="#category-add-modal"><i class="fa-solid fa-plus me-1"></i>Dodaj kategorię</button>
+
+      <!-- :start: Adding category modal -->
+      <div class="modal fade" id="category-add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Dodaj kategorię</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- HTMX FORM -->
+              <form method="post" id="category-add" hx-swap="outerHTML" hx-trigger="refreshPage from:body" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="mt-4 d-flex justify-content-start align-items-center flex-column">
+                {% csrf_token %}
+                <div class="w-100">
+                    {{ categoryForm|crispy }} 
+                </div>
+              </form>
+              <!-- HTMX FORM -->
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+              <button type="button" class="btn btn-link" data-bs-dismiss="modal">Zamknij</button>
+              <button type="submit" class="btn btn-primary" hx-include="#category-add" hx-target="#category-add" hx-post="/products/create/category/">Dodaj kategorię</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- :end: Adding product modal -->
+
     </div>
 </div>
 {% if perms.products.add_product %}
@@ -24,12 +60,70 @@
         <div class="w-100 position-relative">
             <h5 class="text-center">{{ category.name }}</h5>
             <div class="position-absolute end-0 top-0 mt-2 me-4">
-                <span><a href="/products/create/product/{{ category.id }}" class="btn btn-link"><i class="fa-solid fa-plus me-1 "></i>Dodaj przedmiot</a></span>
-                <span><a href="/products/update/category/{{ category.id }}" class="btn btn-link"><i class="fa-solid fa-pen-to-square me-3"></i>Edytuj kategorię</a></span>
+                <!-- <span><a href="/products/create/product/{{ category.id }}" class="btn btn-link"><i class="fa-solid fa-plus me-1 "></i>Dodaj przedmiot</a></span> -->
+                <button class="btn btn-link" hx-get="/products/create/product/{{ category.id }}" hx-target="#product-add-form-{{ category.id }}" data-bs-toggle="modal" data-bs-target="#product-add-{{ category.id }}"><i class="fa-solid fa-plus me-2 "></i>Dodaj przedmiot</button>
+
+                <!-- :start: Adding product modal -->
+                <div class="modal fade" id="product-add-{{ category.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Dodaj przedmiot w kategorii {{ category.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- HTMX FORM -->
+                        <form method="post" id="product-add-form-{{ category.id }}" hx-swap="outerHTML" hx-trigger="refreshPage from:body" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="mt-4 d-flex justify-content-start align-items-center flex-column">
+                          {% csrf_token %}
+                          <div class="w-100">
+                              {{ productForm|crispy }} 
+                          </div>
+                        </form>
+                        <!-- HTMX FORM -->
+                      </div>
+                      <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Zamknij</button>
+                        <button type="submit" class="btn btn-primary" hx-include="#product-add-form-{{ category.id }}" hx-target="#product-add-form-{{ category.id }}" hx-post="/products/create/product/{{ category.id }}">Dodaj przedmiot</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- :end: Adding product modal -->
+
+                <!-- <span><a href="/products/update/category/{{ category.id }}" class="btn btn-link"><i class="fa-solid fa-pen-to-square me-3"></i>Edytuj kategorię</a></span> -->
+                <button class="btn btn-link" hx-get="/products/update/category/{{ category.id }}" hx-target="#category-edit-form-{{ category.id }}" data-bs-toggle="modal" data-bs-target="#category-edit-{{ category.id }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edytuj kategorię</button>
+
+                <!-- :start: Edit product modal -->
+                <div class="modal fade" id="category-edit-{{ category.id }}" tabindex="-1" aria-labelledby="exampleModalLabelEdit{{ category.id }}" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelEdit{{ category.id }}">Edytuj kategorię {{ category.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- HTMX FORM -->
+                        <form method="post" id="category-edit-form-{{ category.id }}" hx-swap="outerHTML" hx-trigger="refreshPage from:body" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="mt-4 d-flex justify-content-start align-items-center flex-column">
+                          {% csrf_token %}
+                          <div class="w-100">
+                              {{ categoryForm|crispy }} 
+                          </div>
+                        </form>
+                        <!-- HTMX FORM -->
+                      </div>
+                      <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-link" data-bs-dismiss="modal">Zamknij</button>
+                        <button type="submit" class="btn btn-primary" hx-include="#category-edit-form-{{ category.id }}" hx-target="#category-edit-form-{{ category.id }}" hx-post="/products/update/category/{{ category.id }}/">Zapisz kategorię</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- :end: Edit product modal -->
+
                 <span>
                   <form onsubmit="return confirm('Czy na pewno chcesz usunąć {{ category.name }}');" action="/products/delete/category/{{ category.id }}/" method="post" class="d-inline-block">
                       {% csrf_token %}
-                      <button type="submit" class="btn btn-link"><i class="fa-solid fa-trash me-3"></i>Usuń kategorię</button>
+                      <button type="submit" class="btn btn-link"><i class="fa-solid fa-trash me-2"></i>Usuń kategorię</button>
                       <!-- <a href="#" onclick="this.parentNode.submit(); return false"><i class="fa-solid fa-trash me-3"></i>Usuń kategorię</a> -->
                   </form>
                 </span>
@@ -60,9 +154,39 @@
                     <span class="position-absolute end-0">
                         <form action="/products/delete/product/{{ product.id }}/" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć {{ product.name }}');" class="d-inline-block">
                           {% csrf_token %}
-                          <button class="btn btn-link me-0 ms-0 p-0" type="submit"><i class="fa-solid fa-trash me-3"></i></button>
+                          <button class="btn btn-link me-0 ms-0 p-0" type="submit"><i class="fa-solid fa-trash me-1"></i></button>
                         </form>
-                        <a href="/products/update/product/{{ product.id }}" class="btn btn-link me-0 ms-0 p-0"><i class="fa-solid fa-pen-to-square me-3"></i></a>
+
+                        <!-- <a href="/products/update/product/{{ product.id }}" class="btn btn-link me-0 ms-0 p-0"><i class="fa-solid fa-pen-to-square me-3"></i></a> -->
+
+                        <button class="btn btn-link" hx-get="/products/update/product/{{ product.id }}" hx-target="#product-edit-form-{{ product.id }}" data-bs-toggle="modal" data-bs-target="#product-edit-{{ product.id }}"><i class="fa-solid fa-pen-to-square me-1"></i></button>
+
+                        <!-- :start: Edit product modal -->
+                        <div class="modal fade" id="product-edit-{{ product.id }}" tabindex="-1" aria-labelledby="exampleModalLabelEditProd{{ product.id }}" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabelEditProd{{ product.id }}">Edytuj przedmiot {{ product.name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <!-- HTMX FORM -->
+                                <form method="post" id="product-edit-form-{{ product.id }}" hx-swap="outerHTML" hx-trigger="refreshPage from:body" hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' class="mt-4 d-flex justify-content-start align-items-center flex-column">
+                                  {% csrf_token %}
+                                  <div class="w-100">
+                                      {{ categoryForm|crispy }} 
+                                  </div>
+                                </form>
+                                <!-- HTMX FORM -->
+                              </div>
+                              <div class="modal-footer d-flex justify-content-between">
+                                <button type="button" class="btn btn-link" data-bs-dismiss="modal">Zamknij</button>
+                                <button type="submit" class="btn btn-primary" hx-include="#product-edit-form-{{ product.id }}" hx-target="#product-edit-form-{{ product.id }}" hx-post="/products/update/product/{{ product.id }}/">Zapisz produkt</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- :end: Edit product modal -->
                     </span>
                 </td>
               </tr>
