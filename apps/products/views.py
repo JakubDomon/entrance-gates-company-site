@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.serializers import serialize
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView, CreateView, View
 from .models import MainCategory, Product, Opinions
-from .forms import ProductForm, CategoryForm
+from .forms import ProductForm, CategoryForm, ProductUpdateForm
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.http import JsonResponse
@@ -42,7 +42,7 @@ class ProductDeleteView(DeleteView):
     
 class ProductUpdateView(UpdateView):
     model = Product
-    form_class = ProductForm
+    form_class = ProductUpdateForm
     success_url = '/products/update/product/'
     template_name = 'products/static/product/product_update.html'
 

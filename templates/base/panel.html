@@ -19,7 +19,7 @@
 <body>
     <div class="w-100">
         <div class="row w-100 h-100">
-            <div class="col-md-2 d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+            <div class="col-md-2 h-100 d-flex flex-column flex-shrink-0 p-3 text-white bg-dark position-fixed">
                 <div class="w-100 d-flex justify-content-center align-items-center">
                     <a href="/"><h5>JANUSZEX</h5></a>
                 </div>
@@ -27,12 +27,12 @@
                 <ul class="nav nav-pills flex-column mb-auto h-100">
                     {% block menu-links %}
                     <!-- <li class="nav-item"><a href="./orders" class="nav-link text-white active"><i class="fa-solid fa-box me-3"></i>Zamówienia</a></li> -->
-                    <li class="nav-item"><a href="./products" class="nav-link text-white"><i class="fa-solid fa-dungeon me-3"></i>Produkty</a></li>
-                    <li class="nav-item"><a href="./pricing" class="nav-link text-white"><i class="fa-solid fa-sack-dollar me-3"></i></i>Wycena</a></li>
-                    <li class="nav-item"><a href="./chat" class="nav-link text-white"><i class="fa-solid fa-comment me-3"></i>Czat</a></li>
-                    <li class="nav-item"><a href="./guarantee" class="nav-link text-white"><i class="fa-solid fa-lock me-3"></i>Status gwarancji</a></li>
-                    <li class="nav-item"><a href="./complaint" class="nav-link text-white"><i class="fa-solid fa-file me-3"></i>Reklamacje</a></li>
-                    {% if request.user|has_group:"Staff" %}
+                    <li class="nav-item"><a href="/panel/products" class="nav-link text-white"><i class="fa-solid fa-dungeon me-3"></i>Produkty</a></li>
+                    <li class="nav-item"><a href="/panel/pricing" class="nav-link text-white"><i class="fa-solid fa-sack-dollar me-3"></i></i>Wycena</a></li>
+                    <li class="nav-item"><a href="/panel/chat" class="nav-link text-white"><i class="fa-solid fa-comment me-3"></i>Czat</a></li>
+                    <li class="nav-item"><a href="/guarantee" class="nav-link text-white"><i class="fa-solid fa-lock me-3"></i>Status gwarancji</a></li>
+                    <li class="nav-item"><a href="/complaint" class="nav-link text-white"><i class="fa-solid fa-file me-3"></i>Reklamacje</a></li>
+                    {% if request.user|has_group:"Staff" or request.user.is_superuser %}
                         <li class="nav-item"><a href="./complaint" class="nav-link text-white"><i class="fa-solid fa-file me-3"></i>Zarządzanie uprawnieniami</a></li>
                         <li class="nav-item"><a href="./complaint" class="nav-link text-white"><i class="fa-solid fa-file me-3"></i>Reklamacje</a></li>
                         <li class="nav-item"><a href="./complaint" class="nav-link text-white"><i class="fa-solid fa-file me-3"></i>Reklamacje</a></li>
@@ -55,6 +55,8 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-2 h-100">
             </div>
             <div class="col-md-10 h-100 d-flex justify-content-center align-items-center ">
                 <div class="h-95 w-95">
