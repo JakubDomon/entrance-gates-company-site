@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class ChatRoom(models.Model):
     name = models.CharField(max_length= 512)
-    description = models.CharField(max_length= 1024)
-
+    creationDate = models.DateTimeField(default=timezone.now)
+    createdBy = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
 class Message(models.Model):
     text = models.TextField()
