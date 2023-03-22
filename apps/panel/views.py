@@ -77,5 +77,6 @@ class ChatPanelAdminList(ListView):
         # Get users
         users = User.objects.filter(groups__name='Staff')
         userConditions = reduce(or_, (Q(user=usr) for usr in users))
-        context['lastMessages'] = Message.objects.exclude(userConditions).order_by('-date')
+        context['clientMessages'] = Message.objects.exclude(userConditions).order_by('-date')
+        context['staffMessages'] = Message.objects.filter(userConditions).order_by('-date')
         return context
