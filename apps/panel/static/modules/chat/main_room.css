@@ -1,0 +1,11 @@
+.message-box{
+    max-width: 60%;
+    min-width: 10%;
+    width: fit-content;
+}
+.message-window{
+    height: 85%;
+}
+.input-window{
+    height: 15%;
+}

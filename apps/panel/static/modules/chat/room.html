@@ -1,0 +1,50 @@
+{% extends 'panel.html' %}
+{% load static %}
+<!-- CRISPY FORMS -->
+{% load crispy_forms_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'modules/chat/main_room.css' %}">
+{% endblock %}
+
+{% block js %}
+{{ request.user.id|json_script:"user_id" }}
+{{ request.user.username|json_script:"user_name" }}
+<script src="{% static 'modules/chat/index_room.js' %}"></script>
+{% endblock %}
+
+{% block main-content %}
+<div class="w-100 h-100 d-flex justify-content-center align-items-center flex-column">
+    <!-- :start: Message room -->
+    <div class="w-100 message-window d-flex justify-content-center align-items-center flex-column">
+        <div class="w-100 h-100 d-flex flex-column overflow-auto" id="messages-place">
+            {% for message in chat_messages %}
+            {% if message.user == request.user %}
+            <div class="w-100 d-flex justify-content-start flex-column">
+                <div class="message-box d-flex justify-content-start flex-column">
+            {% else %}
+            <div class="w-100 d-flex justify-content-start align-items-end flex-column">
+                <div class="message-box d-flex justify-content-start align-items-end flex-column">
+            {% endif %}
+                    <p class="p-0 m-1 ms-3 me-3 text-muted">{{ message.user }}</p>
+                    <div class="w-100 border border-1 rounded-pill d-flex justify-content-start align-items-center mb-3" style="background-color: rgb(255, 255, 255);">
+                        <p class="p-0 m-2 ms-3 me-3 text-break">{{ message.text }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- :end: Message room -->
+    <!-- :start: User message input -->
+    <div class="w-100 input-window d-flex justify-content-center align-items-center flex-row">
+        <form action="#" id="messageForm" class="w-75">
+            {{ messageForm|crispy }}
+        </form>
+        <div class="ms-2">
+            <button type="submit" form="messageForm" class="btn btn-primary">Wyślij</button>
+        </div>
+    </div>
+    <!-- :end: User message imput -->
+</div>
+{% endblock %}
