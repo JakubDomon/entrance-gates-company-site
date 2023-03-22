@@ -5,7 +5,6 @@ from apps.main.models import CompanyOpinions, MainContactForm
 from apps.authorize.forms import LoginForm
 from django.views.generic import TemplateView, FormView
 import json
-
 # # HOME VIEW
 # def home(request):
 #     # Getting products
