@@ -1,0 +1,60 @@
+{% extends 'panel.html' %}
+{% load static %}
+<!-- CRISPY FORMS -->
+{% load crispy_forms_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'modules/chat/admin/main_adm_panel.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'modules/chat/admin/index_adm_panel.js' %}"></script>
+{% endblock %}
+
+{% block main-content %}
+<div class="w-100 h-100">
+    <div class="row h-50 justify-content-around align-items-center g-2">
+        <div class="col-md-5 h-90 d-flex justify-content-center align-items-center flex-column">
+            <h5>Czaty użytkowników</h5>
+            <div class="h-100 w-100 border border-secondary border-2 rounded-3 d-flex justify-content-top scrollable">
+                <div class="w-100 m-3 h-100">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Użytkownik</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Ostatnia wiadomość</th>
+                            <th scope="col">Czat</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for chatroom in chat_rooms %}
+                          {% if chatroom.message_set.exists %}
+                          <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ chatroom.createdBy }}</td>
+                            <td>{{ chatroom.creationDate }}</td>
+                            <td>{{ chatroom.message_set.last.date }}</td>
+                            <td><a href="/panel/chat/{{ chatroom.name }}"><i class="fa-solid fa-right-to-bracket fa-beat ms-2"></i></a></td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 h-90 d-flex justify-content-center align-items-center flex-column">
+            <h5>Statystyki czatów</h5>
+            <div class="h-100 w-100 border border-secondary border-2 rounded-3">asddas</div>
+        </div>
+    </div>
+    <div class="row h-50 justify-content-center align-items-center g-2">
+        <div class="col-md-5 h-90 w-100 d-flex justify-content-center align-items-center flex-column">
+            <h5>Najnowsze wiadomości</h5>
+            <div class="h-100 w-100 border border-secondary border-2 rounded-3">asddas</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

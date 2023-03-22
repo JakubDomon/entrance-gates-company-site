@@ -26,12 +26,14 @@ SECRET_KEY = 'django-insecure-g*r%@s7yz3%z*5bx)tz+qt&*4hj0h!w_c1#79pbu^@j9!t#&f3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.12', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +48,10 @@ INSTALLED_APPS = [
     'apps.authorize',
     'apps.panel',
     'apps.products',
+    'apps.chat',
 ]
+
+ASGI_APPLICATION = 'Website.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,6 +101,20 @@ DATABASES = {
     }
 }
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [(os.getenv('REDIS_HOST', os.getenv('REDIS_PORT')))]
+#         },
+#     },
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
