@@ -6,6 +6,9 @@ from apps.products.forms import ProductForm, CategoryForm, ProductUpdateForm
 from apps.chat.models import Message, ChatRoom
 from apps.chat.forms import MessageForm
 import random, string
+from django.db.models import Q
+from functools import reduce
+from operator import or_
 
 # Views for admin panel
 class ProductViewList(ListView):
@@ -64,3 +67,16 @@ class ChatPanelAdminList(ListView):
     model = ChatRoom
     context_object_name = 'chat_rooms'
     template_name = 'panel/static/modules/chat/admin/panel.html'
+
+    def get_queryset(self):
+        chatrooms = ChatRoom.objects.exclude(message=None)
+        return chatrooms
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get users
+        users = User.objects.filter(groups__name='Staff')
+        userConditions = reduce(or_, (Q(user=usr) for usr in users))
+        context['clientMessages'] = Message.objects.exclude(userConditions).order_by('-date')
+        context['staffMessages'] = Message.objects.filter(userConditions).order_by('-date')
+        return context
