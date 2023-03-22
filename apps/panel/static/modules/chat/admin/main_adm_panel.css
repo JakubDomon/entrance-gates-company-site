@@ -1,5 +1,6 @@
 .h-90{
     height: 90%;
+    max-height: 90%;
 }
 .w-45{
     width: 45%;
