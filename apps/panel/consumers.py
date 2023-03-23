@@ -1,7 +1,4 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from channels.db import database_sync_to_async
-from channels import layers
-from asgiref.sync import async_to_sync
 import json
 
 class DashboardAdminConsumer(AsyncWebsocketConsumer):
@@ -45,16 +42,3 @@ class DashboardAdminConsumer(AsyncWebsocketConsumer):
             'action': action,
             'payload': payload,
         }))
-
-def notify_chat_dashboard(action, payload):
-    group_name = 'adminpanelroom'
-    channel_layer = layers.get_channel_layer()
-
-    async_to_sync(channel_layer.group_send)(
-        group_name,
-        {
-            'type': 'notify_event',
-            'action': action,
-            'payload': payload
-        }
-    )

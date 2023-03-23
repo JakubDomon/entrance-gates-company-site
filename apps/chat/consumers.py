@@ -3,6 +3,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import async_to_sync
 from .models import ChatRoom, Message
+from django.core import serializers
+from CustomClasses.WebSockets.Notifiers import AdminChatPanelNotifier
 
 class ChatConsumer(AsyncWebsocketConsumer):
     
@@ -29,6 +31,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         
         await database_sync_to_async(msg.save)()
 
+        # Notify about new message
+        notifier = AdminChatPanelNotifier()
+        await notifier.notify_new_message_dashboard(msg, self.scope['user'])
+
+        # Send message to group
         await self.channel_layer.group_send(
             self.room_group_name,
             {
