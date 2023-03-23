@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from json import JSONEncoder
 
 class ChatRoom(models.Model):
     name = models.CharField(max_length= 512)
