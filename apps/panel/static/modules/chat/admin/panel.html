@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'modules/chat/admin/index_adm_panel.js' %}"></script>
+<script type="module" src="{% static 'modules/chat/admin/classes/Changer.mjs' %}"></script>
+<script type="module" src="{% static 'modules/chat/admin/index_adm_panel.js' %}"></script>
 {% endblock %}
 
 {% block main-content %}
@@ -49,7 +50,7 @@
               <ul class="w-100 list-group bg-transparent">
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba wiadomości od klientów
-                  <span class="badge bg-primary rounded-pill">{{ clientMessages|length }}</span>
+                  <span class="badge bg-primary rounded-pill" id="clientMessagesNumber">{{ clientMessages|length }}</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba nieprzeczytanych wiadomości od klientów
