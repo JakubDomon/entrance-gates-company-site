@@ -22,22 +22,26 @@ class Notifier:
         return is_staff
 
     def serialize_objects(self, objects: list) -> str:
-        
         listToSerialize = list()
         if isinstance(objects, object): listToSerialize.append(objects)
 
         try: serialized_msg = serializers.serialize('json', listToSerialize)
         except: serialized_msg = ''
 
-        return serialized_msg
+        # Add username field
+        json_msg = json.loads(serialized_msg)
+        json_msg[0]['fields']['user_name'] = objects.user.username
+        serialized_msg = json.dumps(json_msg)
+
+        return json.loads(serialized_msg)
     
-    async def send_message_to_group(self, action: str, payload: str) -> None:
+    async def send_message_to_group(self, action: str, payload: json) -> None:
         await self.channel_layer.group_send(
             self.group_name,
             {
                 'type': 'notify_event',
                 'action': action,
-                'payload': payload
+                'payload': payload,
             }
         )
 
@@ -52,10 +56,10 @@ class AdminChatPanelNotifier(Notifier):
     def __init__(self, groupname: str = 'adminpanelroom', channellayer=layers.get_channel_layer()) -> None:
         super().__init__(groupname, channellayer)
     
-    async def notify_new_message_dashboard(self, messages: list, user: object) -> None:
+    async def notify_new_message_dashboard(self, messages: object, user: object) -> None:
         # Serialize objects
         serialized_payload = self.serialize_objects(messages)
-        
+
         # Check if user has access to chat admin panel
         is_staff = await super().check_if_staff(user)
 

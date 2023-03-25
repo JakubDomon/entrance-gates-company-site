@@ -9,6 +9,7 @@ import random, string
 from django.db.models import Q
 from functools import reduce
 from operator import or_
+from django.utils import timezone
 
 # Views for admin panel
 class ProductViewList(ListView):
@@ -60,7 +61,7 @@ class ChatRoomViewList(ListView):
     
     def get_queryset(self):
         chatroom = ChatRoom.objects.filter(name=self.kwargs['room']).get()
-        queryset = Message.objects.filter(chatroom=chatroom.id).order_by('-date')
+        queryset = Message.objects.filter(chatroom=chatroom.id).order_by('date')
         return queryset
     
 class ChatPanelAdminList(ListView):
@@ -77,6 +78,11 @@ class ChatPanelAdminList(ListView):
         # Get users
         users = User.objects.filter(groups__name='Staff')
         userConditions = reduce(or_, (Q(user=usr) for usr in users))
+        # Get current data
+        now = timezone.now()
+        # Query database
         context['clientMessages'] = Message.objects.exclude(userConditions).order_by('-date')
         context['staffMessages'] = Message.objects.filter(userConditions).order_by('-date')
+        context['UserMessagesToday'] = Message.objects.filter(date__date=now)
+        context['UserMessagesMonth'] = Message.objects.filter(date__month=now.month)
         return context

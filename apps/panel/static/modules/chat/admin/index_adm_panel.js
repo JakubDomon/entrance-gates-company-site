@@ -26,4 +26,7 @@ chatSocket.onmessage = (e) => {
     let data = JSON.parse(e.data)
     console.log(data)
     changer.increment_messages_from_clients()
+    changer.increment_messages_from_clients_unread()
+    changer.change_recent_client_message_date(data)
+    changer.add_new_message(data)
 }
