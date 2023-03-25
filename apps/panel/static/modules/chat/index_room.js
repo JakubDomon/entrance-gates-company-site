@@ -6,7 +6,6 @@ console.log(userName)
 // WebSockets
 let chatName = window.location.pathname.replace('/panel/chat/', '')
 let url = `ws://${window.location.host}/ws/socket-server/${chatName}/`
-
 const chatSocket = new WebSocket(url)
 
 // Construct message HTML body
@@ -38,17 +37,21 @@ var userMessage = (data) => {
     return message
 }
 
+// Message div
+var messagesElem = document.querySelector('#messages-place')
+messagesElem.scrollTop = messagesElem.scrollHeight
+
 chatSocket.onmessage = (e) => {
     let data = JSON.parse(e.data)
     console.log(data)
 
     if(data.type == 'chat'){
         if(data.user_id == userID){
-            let messages = document.querySelector('#messages-place')
-            messages.insertAdjacentHTML('afterbegin',userMessage(data))
+            messagesElem.insertAdjacentHTML('beforeend',userMessage(data))
+            messagesElem.scrollTop = messagesElem.scrollHeight
         }else{
-            let messages = document.querySelector('#messages-place')
-            messages.insertAdjacentHTML('afterbegin',foreignMessage(data))
+            messagesElem.insertAdjacentHTML('beforeend',foreignMessage(data))
+            messagesElem.scrollTop = messagesElem.scrollHeight
         }
     }
 }

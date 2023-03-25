@@ -1,5 +1,6 @@
 {% extends 'panel.html' %}
 {% load static %}
+{% load tz %}
 <!-- CRISPY FORMS -->
 {% load crispy_forms_tags %}
 
@@ -8,7 +9,7 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'modules/chat/admin/index_adm_panel.js' %}"></script>
+<script type="module" src="{% static 'modules/chat/admin/index_adm_panel.js' %}"></script>
 {% endblock %}
 
 {% block main-content %}
@@ -34,7 +35,7 @@
                             <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ chatroom.createdBy }}</td>
                             <td>{{ chatroom.creationDate|date:'Y-m-d H:i:s' }}</td>
-                            <td>{{ chatroom.message_set.last.date|date:'Y-m-d H:i:s' }}</td>
+                            <td id="chatroom-{{ chatroom.id }}">{{ chatroom.message_set.last.date|date:'Y-m-d H:i:s' }}</td>
                             <td><a href="/panel/chat/{{ chatroom.name }}"><i class="fa-solid fa-right-to-bracket fa-beat ms-2"></i></a></td>
                           </tr>
                           {% endfor %}
@@ -49,35 +50,31 @@
               <ul class="w-100 list-group bg-transparent">
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba wiadomości od klientów
-                  <span class="badge bg-primary rounded-pill">{{ clientMessages|length }}</span>
+                  <span class="badge bg-primary rounded-pill" id="clientMessagesNumber">{{ clientMessages|length }}</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba nieprzeczytanych wiadomości od klientów
-                  <span class="badge bg-primary rounded-pill">14</span>
+                  <span class="badge bg-primary rounded-pill" id="unreadClientMessages">14</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba wiadomości od obsługi
-                  <span class="badge bg-primary rounded-pill">{{ staffMessages|length }}</span>
+                  <span class="badge bg-primary rounded-pill" id="staffMessages">{{ staffMessages|length }}</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Data ostatniej wiadomości od klientów
-                  <span class="badge bg-primary rounded-pill">{{ clientMessages.first.date|date:'Y-m-d H:i:s' }}</span>
+                  <span class="badge bg-primary rounded-pill" id="lastMessage">{{ clientMessages.first.date|date:'Y-m-d H:i:s' }}</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Średni czas odpowiedzi
-                  <span class="badge bg-primary rounded-pill">1-12-2023</span>
-                </li>
-                <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
-                  Średni czas odpowiedzi
-                  <span class="badge bg-primary rounded-pill">1-12-2023</span>
+                  <span class="badge bg-primary rounded-pill" id="averageResponseTime">100</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba wiadomości od użytkowników dzisiaj
-                  <span class="badge bg-primary rounded-pill">1-12-2023</span>
+                  <span class="badge bg-primary rounded-pill" id="todayClientMessages">{{ UserMessagesToday|length }}</span>
                 </li>
                 <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center">
                   Liczba wiadomości od użytkowników w tym miesiącu
-                  <span class="badge bg-primary rounded-pill">1-12-203</span>
+                  <span class="badge bg-primary rounded-pill" id="monthClientMessages">{{ UserMessagesMonth|length }}</span>
                 </li>
               </ul>
             </div>
@@ -90,22 +87,22 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Użytkownik</th>
                     <th scope="col">Data</th>
                     <th scope="col">Treść wiadomości</th>
                     <th scope="col">Odpowiedz</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="recentMessages">
                   {% for message in clientMessages %}
-                  <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ message.user.username }}</td>
+                  {% localtime on %}
+                  <tr id="{{ message.id }}">
+                    <td scope="row">{{ message.user.username }}</td>
                     <td>{{ message.date|date:'Y-m-d H:i:s' }}</td>
                     <td>{{ message.text }}</td>
                     <td><a href="/panel/chat/{{ message.chatroom.name }}"><i class="fa-solid fa-message"></i></a></td>
                   </tr>
+                  {% endlocaltime %}
                   {% endfor %}
                 </tbody>
               </table>
