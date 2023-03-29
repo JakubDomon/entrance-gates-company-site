@@ -67,6 +67,19 @@ export class Changer{
         chatroomLastMessageElem.textContent = stringDate
     }
 
+    change_recent_chatbox_message_date(message){
+        let messageDateString = Date.parse(message.payload[0].fields.date)
+        let messageDate = new Date(messageDateString)
+        let day = ('0'+messageDate.getDate()).slice(-2)
+        let month = ('0'+(messageDate.getMonth()+1)).slice(-2)
+        let minutes = ('0'+messageDate.getMinutes()).slice(-2)
+        let seconds = ('0'+messageDate.getSeconds()).slice(-2)
+        let stringDate = `${messageDate.getFullYear()}-${month}-${day} ${messageDate.getHours()}:${minutes}:${seconds}`
+
+        let chatroomLastMessageElem = document.querySelector(`#chatroom-${message.payload[0].fields.chatroom}`)
+        chatroomLastMessageElem.textContent = stringDate
+    }
+
     // STATS -> method to change average response delay
     //  TO DO
 
