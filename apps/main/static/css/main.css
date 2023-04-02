@@ -63,6 +63,12 @@
 .text-center{
     margin-bottom: 40%;
 }
+.menu-item-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
 .content-1{
     height: 80vh;
     width: 100%;

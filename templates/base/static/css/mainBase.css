@@ -52,12 +52,15 @@ body{
     padding: 0;
     overflow: hidden;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 }
 .menu-item{
-    float: left;
-    margin: 2%;
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
     font-weight: bold;
+    word-break: keep-all;
     transition: 100ms;
 }
 
